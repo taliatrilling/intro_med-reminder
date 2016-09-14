@@ -15,7 +15,8 @@ def show_meds():
 		print item.med_name
 
 def reminder_frequency(days_between_orders, days_remind_before):
-	pass
+	time_to_remind = days_between_orders - days_remind_before
+	#need to find a way to take time_to_remind as a cue to send the messages
 
 def change_info():
 	show_meds()
@@ -37,7 +38,7 @@ Please enter 'name,' 'days between orders,' 'shipping days,' 'dose,' or 'exit' i
 					med_list.med_name = new_name
 			print "Your medication name has been changed"
 		elif change_part == "days between orders" or change_part == "days between orders,":
-			new_days = raw_input("What would you like to set as the number of days between this medication's orders? ")
+			new_days = raw_input("What would you like to set as the number of days one shipment of this medication will last for? ")
 			for i in range(len(med_list)):
 				if med_list[i].med_name == change:
 					med_list[i].days_between_orders = new_days
@@ -61,9 +62,18 @@ Please enter 'name,' 'days between orders,' 'shipping days,' 'dose,' or 'exit' i
 Please make sure you are spelling the medication correctly."""
 
 def add_new():
-	# make sure to account for .lower()
-	pass
-
+	new_med = raw_input("What is the name of the medication you would like to add? ").lower()
+	if check_med(new_med) == 1:
+		print "That medication is already on the list."
+	else:
+		new_days = raw_input("What would you like to set as the number of days one shipment of this medication will last for? ")
+		new_shipping = raw_input("What would you like to set as the shipping time for this medication's orders? ")
+		new_dose = raw_input("What would you like to set as the dose for this medication? You may leave this field blank. ")
+		new_email = raw_input("What would you like to set as the email to receive messages about this medication at? You may leave this field blank. ")
+		new_mobile = raw_input("What would you like to set as the mobile number to receive messages about this medication at? You may leave this field blank. ")
+		new_med_info = Medication(new_med, new_days, new_shipping, dose = new_dose, email = new_email, mobile = new_mobile)
+		med_list.append(new_med_info)
+	
 def delete():
 	show_meds()
 	delete = raw_input("""Which medication would you like to remove (please type exit if you have decided to not

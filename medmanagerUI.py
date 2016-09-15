@@ -9,7 +9,7 @@ var_label_text = StringVar()
 
 def menu():
 	menubar = Menu(root_widget)
-	root_widget.geometry("400x300")
+	root_widget.geometry("350x200")
 	root_widget.title("Medication Reminder")
 	menubar.add_command(label = "Quit", command = root_widget.quit)
 	var_label_text.set("Please choose an option below: ")
@@ -23,6 +23,8 @@ def menu():
 	btn_add_meds.grid(row = 3, columnspan = 2)
 	btn_del_meds = Button(text = "Delete a medication from the program", command = lambda: mm.delete())
 	btn_del_meds.grid(row = 4, columnspan = 2)
+	btn_exit = Button(text = "Exit", command = quit)
+	btn_exit.grid(row = 5 ,columnspan = 2)
 	root_widget.config(menu = menubar)
 	root_widget.mainloop()
 

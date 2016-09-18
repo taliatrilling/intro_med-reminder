@@ -26,7 +26,7 @@ def show_meds():
 		print item.med_name
 
 def reminder_frequency(medication_incidence):
-	# test = Medication("med name", days_between_orders = 60, days_remind_before = 10, mobile = 0000000)
+	# test = Medication("med name", days_between_orders = 60, days_remind_before = 10)
 	# med_list.append(test)
 	Medication.send_text_reminder(medication_incidence)
 	#time_to_remind = days_between_orders - days_remind_before
@@ -85,8 +85,7 @@ def add_new():
 		new_shipping = raw_input("What would you like to set as the shipping time for this medication's orders? ")
 		new_dose = raw_input("What would you like to set as the dose for this medication? You may leave this field blank. ")
 		new_email = raw_input("What would you like to set as the email to receive messages about this medication at? You may leave this field blank. ")
-		new_mobile = raw_input("What would you like to set as the mobile number to receive messages about this medication at? You may leave this field blank. ")
-		new_med_info = Medication(new_med, new_days, new_shipping, dose = new_dose, email = new_email, mobile = new_mobile)
+		new_med_info = Medication(new_med, new_days, new_shipping, dose = new_dose, email = new_email)
 		med_list.append(new_med_info)
 		write_to_pkl(med_list)
 	

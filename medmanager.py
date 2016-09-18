@@ -1,6 +1,16 @@
 from medreminder import Medication
+import cPickle as pickle
 
-med_list = []
+def write_to_pkl(med_list):
+	pkl_file = open("mymeds.pkl", "wb")
+	pickle.dump(med_list, pkl_file)
+	pkl_file.close()
+
+def read_from_pkl():
+	with open("mymeds.pkl", "rb") as pkl_file:
+		return pickle.load(pkl_file)
+
+med_list = read_from_pkl()
 
 def check_med(med_name):
 	for item in med_list:
@@ -11,11 +21,15 @@ def check_med(med_name):
 
 def show_meds():
 	print "Your current medications are:"
+	med_list = read_from_pkl()
 	for item in med_list:
 		print item.med_name
 
-def reminder_frequency(days_between_orders, days_remind_before):
-	time_to_remind = days_between_orders - days_remind_before
+def reminder_frequency(medication_incidence):
+	# test = Medication("med name", days_between_orders = 60, days_remind_before = 10, mobile = 0000000)
+	# med_list.append(test)
+	Medication.send_text_reminder(medication_incidence)
+	#time_to_remind = days_between_orders - days_remind_before
 	#need to find a way to take time_to_remind as a cue to send the messages
 
 def change_info():
@@ -57,6 +71,7 @@ Please enter 'name,' 'days between orders,' 'shipping days,' 'dose,' or 'exit' i
 			print "Your medication dose has been changed."
 		elif change_part == "exit":
 			return
+		write_to_pkl(med_list)
 	else:
 		print """That medication is not on your list of medications. 
 Please make sure you are spelling the medication correctly."""
@@ -73,6 +88,7 @@ def add_new():
 		new_mobile = raw_input("What would you like to set as the mobile number to receive messages about this medication at? You may leave this field blank. ")
 		new_med_info = Medication(new_med, new_days, new_shipping, dose = new_dose, email = new_email, mobile = new_mobile)
 		med_list.append(new_med_info)
+		write_to_pkl(med_list)
 	
 def delete():
 	show_meds()
@@ -84,6 +100,7 @@ delete a medication)? """).lower()
 				med_list.remove(med_list[i])
 				break
 		print "Your medication has been deleted." 
+		write_to_pkl(med_list)
 	elif delete == "exit":
 		return
 	else:
@@ -92,7 +109,9 @@ Please make sure you are spelling the medication correctly."""
 
 
 def main():
-	pass
+	add_new()
+	show_meds()
+
 
 if __name__ == '__main__':
 	main()

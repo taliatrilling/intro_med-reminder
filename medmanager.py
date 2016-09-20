@@ -1,6 +1,16 @@
 from medreminder import Medication
 import cPickle as pickle
 
+def menu():
+	print """Please select an option:
+	Main Menu
+1 - Show all medications currently in the system
+2 - Add a new medication to the protocol
+3 - Change the information associated with a medication in the protocol
+4 - Delete a medication from the protocol
+5 - Exit 
+	"""
+
 def write_to_pkl(med_list):
 	pkl_file = open("mymeds.pkl", "wb")
 	pickle.dump(med_list, pkl_file)
@@ -24,13 +34,6 @@ def show_meds():
 	med_list = read_from_pkl()
 	for item in med_list:
 		print item.med_name
-
-def reminder_frequency(medication_incidence):
-	# test = Medication("med name", days_between_orders = 60, days_remind_before = 10)
-	# med_list.append(test)
-	Medication.send_text_reminder(medication_incidence)
-	#time_to_remind = days_between_orders - days_remind_before
-	#need to find a way to take time_to_remind as a cue to send the messages
 
 def change_info():
 	show_meds()
@@ -91,8 +94,8 @@ def add_new():
 	
 def delete():
 	show_meds()
-	delete = raw_input("""Which medication would you like to remove (please type exit if you have decided to not
-delete a medication)? """).lower()
+	delete = raw_input("""Which medication would you like to remove 
+(please type exit if you have decided to not delete a medication)? """).lower()
 	if check_med(delete) == 1:
 		for i in range(len(med_list)):
 			if med_list[i].med_name == delete:
@@ -108,9 +111,23 @@ Please make sure you are spelling the medication correctly."""
 
 
 def main():
-	add_new()
-	show_meds()
-
+	menu()
+	while(True):
+		choice = int(raw_input("Please choose any of the above menu items or enter 0 to see the main menu again: "))
+		if choice == 5:
+			break
+		elif choice == 0:
+			menu()
+		elif choice == 1:
+			show_meds()
+		elif choice == 2:
+			add_new()
+		elif choice == 3:
+			change_info()
+		elif choice == 4:
+			delete()
+		else:
+			print "Please enter a valid input. "
 
 if __name__ == '__main__':
 	main()

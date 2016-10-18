@@ -25,9 +25,8 @@ med_list = read_from_pkl()
 def check_med(med_name):
 	for item in med_list:
 		if item.med_name == med_name:
-			return 1
-		else:
-			return 2
+			return True
+	return False
 
 def show_meds():
 	print "Your current medications are:"
@@ -38,7 +37,7 @@ def show_meds():
 def change_info():
 	show_meds()
 	change = raw_input("Which medication would you like to change the information for? ").lower()
-	if check_med(change) == 1:
+	if check_med(change):
 		print "Your current info for this medication is:"
 		for i in range(len(med_list)):
 			if med_list[i].med_name == change:
@@ -52,7 +51,7 @@ Please enter 'name,' 'days between orders,' 'shipping days,' 'dose,' or 'exit' i
 			new_name = raw_input("What would you like the medication's new name to be? ")
 			for i in range(len(med_list)):
 				if med_list[i].med_name == change:
-					med_list.med_name = new_name
+					med_list[i].med_name = new_name
 			print "Your medication name has been changed"
 		elif change_part == "days between orders" or change_part == "days between orders,":
 			new_days = raw_input("What would you like to set as the number of days one shipment of this medication will last for? ")
@@ -76,12 +75,12 @@ Please enter 'name,' 'days between orders,' 'shipping days,' 'dose,' or 'exit' i
 			return
 		write_to_pkl(med_list)
 	else:
-		print """That medication is not on your list of medications. 
-Please make sure you are spelling the medication correctly."""
+		print """That medication is not on your list of medications. Please make sure you 
+are spelling the medication correctly."""
 
 def add_new():
 	new_med = raw_input("What is the name of the medication you would like to add? ").lower()
-	if check_med(new_med) == 1:
+	if check_med(new_med):
 		print "That medication is already on the list."
 	else:
 		new_days = raw_input("What would you like to set as the number of days one shipment of this medication will last for? ")
@@ -94,9 +93,9 @@ def add_new():
 	
 def delete():
 	show_meds()
-	delete = raw_input("""Which medication would you like to remove 
-(please type exit if you have decided to not delete a medication)? """).lower()
-	if check_med(delete) == 1:
+	delete = raw_input("""Which medication would you like to remove (please type exit if you have decided 
+to not delete a medication)? """).lower()
+	if check_med(delete):
 		for i in range(len(med_list)):
 			if med_list[i].med_name == delete:
 				med_list.remove(med_list[i])

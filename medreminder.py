@@ -1,6 +1,6 @@
 from mailin import Mailin
 import datetime
-from key import m 
+from key import m
 
 class Medication(object):
 	def __init__ (self, med_name, days_between_orders, days_remind_before, dose = "", email = ""):
@@ -31,7 +31,8 @@ med = Medication("Placeholder med", 60, 10, email = "taliatrilling@gmail.com")
 
 def main():
 	meds_list = []
-	Medication.send_email_reminder(med)
+	res = Medication.send_email_reminder(med)
+	
 
 if __name__ == '__main__':
 	main() 
